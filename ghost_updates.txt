@@ -1,0 +1,41 @@
+================================================================================
+GHOST UPDATES LOG - PORTFOLIO REWORK (CONTACT & NAVBAR DEVELOPMENTS)
+================================================================================
+
+This log documents the sequential developments made to your portfolio's Contact section and the floating header Navbar.
+
+--------------------------------------------------------------------------------
+1. CONTACT CARD & EMAIL INTEGRATIONS
+--------------------------------------------------------------------------------
+Files modified:
+- `src/components/Contact.jsx`
+
+Details of changes:
+- ENLARGED BUTTON HITBOXES: Wrapped the visual indicator dots inside transparent buttons with `6px` of padding. This increases the clickable target size of each dot by over 400%, making it extremely easy and responsive to navigate through the thoughts.
+- REMOVED GITHUB FROM CONNECT: Removed the GitHub profile link from the expanded list inside the "Let's connect" card, since it is not a direct channel for communication.
+- SEAMLESS GMAIL WEB LINKING: Replaced the standard browser-native "mailto:" link with a direct web URL redirecting to Gmail's browser compose interface:
+  `https://mail.google.com/mail/?view=cm&fs=1&to=beroze182@gmail.com`
+- PRE-FILLED EMAIL SUBJECT & BODY: Appended URL-encoded query parameters (`su` and `body`) to the Gmail compose link to pre-fill content:
+  * Subject: "Landed right from your portfolio"
+  * Body: "Hey Eroze,\n\nJust came across your portfolio and "
+- COPY CLEANUP: Replaced the em-dash (`—`) in the Bugatti quote with a standard dash (`-`) per your guidelines.
+
+--------------------------------------------------------------------------------
+2. CLASSY GLASS NAVBAR & DROP-DOWN
+--------------------------------------------------------------------------------
+Files modified:
+- `src/components/Navbar.jsx`
+- `src/components/BehindTheCurtains.jsx`
+- `src/data/content.js`
+
+Details of changes:
+- NAVBAR GLASSMOPRHISM: Increased background transparency of the floating menu bar (down to `0.22` scrolled, `0.08` resting) paired with a `16px` backdrop blur, letting behind elements blend beautifully underneath the glass pane.
+- INVISIBLE COLLAPSED BOUNDARY: The "More" button displays with an invisible boundary (`borderColor: 'transparent'`) when collapsed, aligning seamlessly with standard links (Skills, Contact, Work).
+- ACTIVE DROPDOWN CLASSY DARK-GLASS THEME: Clicking "More" toggles a classy dark-themed state:
+  * The More button highlights in a warm, translucent orange background (`rgba(185,82,33,0.12)`) and thin orange outline (`rgba(185,82,33,0.4)`).
+  * The dropdown container renders as a sleek dark-glass panel (`rgba(10,10,10,0.92)`) with a thin border and `16px` blur filter.
+  * Links inside the dropdown display in a muted slate (`#94a3b8`) by default, and hover to draw a warm transparent orange bar (`rgba(185,82,33,0.08)`), transition to orange (`#b95221`), and smoothly nudge/slide to the right (from `0.7rem` to `0.95rem` padding).
+- DROP-DOWN-FADE-IN TRANSITION: The dropdown list is enclosed in a Framer Motion container with `originY: 0` coordinates. Opening triggers a smooth, macOS-like popover slide-down and fade-in drop transition.
+- SCROLL ANCHOR CORRECTION: Positioned a hidden absolute anchor `div` with `id="behind-the-curtains"` exactly at `top: 100vh` inside the section, completely bypassing transitional negative margins and ensuring anchor links scroll perfectly to the visible about me content.
+- EYEBROW COPY UPDATE: Changed the eyebrow label above the main header "Behind the curtains" from "Behind the Curtains" to "ABOUT SELF" inside `content.js`.
+================================================================================
