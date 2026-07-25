@@ -37,7 +37,7 @@ export default function App() {
           }}
         >
           <img
-            src="/portrait.png"
+            src={`${import.meta.env.BASE_URL}portrait.png`}
             style={{
               width: 'min(320px, 80vw)', height: 'auto',
               aspectRatio: '320 / 400',

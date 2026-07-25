@@ -231,7 +231,7 @@ export default function Contact() {
 
         {/* Resume — bigger, white, inverse hover */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
-          <motion.a href="/Eroze_Barua_Resume.pdf" download="Eroze_Barua_Resume.pdf"
+          <motion.a href={`${import.meta.env.BASE_URL}Eroze_Barua_Resume.pdf`} download="Eroze_Barua_Resume.pdf"
             whileHover={{ scale: 1.04, boxShadow: '0 0 36px 8px rgba(255,255,255,0.14)', backgroundColor: '#f2f7f2', color: '#080808', borderColor: '#f2f7f2' }}
             animate={isResumeHighlighted ? { scale: 1.04, boxShadow: '0 0 36px 8px rgba(255,255,255,0.14)', backgroundColor: '#f2f7f2', color: '#080808', borderColor: '#f2f7f2' } : {}}
             transition={{ type: 'spring', stiffness: 300, damping: 20 }}

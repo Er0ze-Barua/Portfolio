@@ -1,3 +1,5 @@
+const BASE = import.meta.env.BASE_URL;
+
 export const education = {
   school: 'UPES Dehradun',
   degree: 'B.Tech CS (AI & ML)',
@@ -28,7 +30,7 @@ export const projects = [
     index: '01',
     stack: ['Django', 'DRF', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker Compose'],
     github: 'https://github.com/Er0ze-Barua/ai-learning-resource-explorer',
-    images: ['/projects/explorer-1.png', '/projects/explorer-3.png', '/projects/explorer-2.png'],
+    images: [`${BASE}projects/explorer-1.png`, `${BASE}projects/explorer-3.png`, `${BASE}projects/explorer-2.png`],
     slides: [
       {
         label: 'OVERVIEW',
@@ -53,7 +55,7 @@ export const projects = [
     index: '02',
     stack: ['FastAPI', 'Django', 'Scikit-Learn', 'Docker Compose'],
     github: 'https://github.com/Er0ze-Barua/rto-sentinel',
-    images: ['/projects/rto-1.png', '/projects/rto-2.png', '/projects/rto-3.png'],
+    images: [`${BASE}projects/rto-1.png`, `${BASE}projects/rto-2.png`, `${BASE}projects/rto-3.png`],
     slides: [
       {
         label: 'OVERVIEW',
@@ -78,7 +80,7 @@ export const projects = [
     index: '03',
     stack: ['Vanilla JS', 'Chrome Extension MV3', 'Gemini API'],
     github: 'https://github.com/Er0ze-Barua/AI-Cold-Email-Generator',
-    images: ['/projects/mail-1.png', '/projects/mail-2.png', '/projects/mail-3.png', '/projects/mail-4.png'],
+    images: [`${BASE}projects/mail-1.png`, `${BASE}projects/mail-2.png`, `${BASE}projects/mail-3.png`, `${BASE}projects/mail-4.png`],
     slides: [
       {
         label: 'OVERVIEW',
@@ -103,7 +105,7 @@ export const projects = [
     index: '04',
     stack: ['Django', 'Ollama', 'MentalBERT', 'DistilBERT', 'SQLite'],
     github: 'https://github.com/Er0ze-Barua/Mental-Wellness-AI-Companion',
-    images: ['/projects/wellness-1.png', '/projects/wellness-2.png', '/projects/wellness-3.png', '/projects/wellness-4.png'],
+    images: [`${BASE}projects/wellness-1.png`, `${BASE}projects/wellness-2.png`, `${BASE}projects/wellness-3.png`, `${BASE}projects/wellness-4.png`],
     slides: [
       {
         label: 'OVERVIEW',

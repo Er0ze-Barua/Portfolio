@@ -73,7 +73,7 @@ export default function SplashScreen({ onComplete }) {
           }}
         >
           <img
-            src="/portrait.png"
+            src={`${import.meta.env.BASE_URL}portrait.png`}
             style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1)' }}
           />
         </motion.div>

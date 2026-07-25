@@ -323,7 +323,7 @@ export default function Projects() {
         {/* Desktop */}
         <div className="mt-16 hidden lg:flex gap-16">
           <div className="lg:w-1/2">
-            <div className="sticky top-1/4">
+            <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-2 custom-scrollbar">
               {/* Entire text block fades in/out and slides up when active project changes (Wheel Effect) */}
               <AnimatePresence mode="wait">
                 <motion.div key={active.id} variants={textVariants} initial="enter" animate="center" exit="exit">

@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import SectionHeader from './SectionHeader'
 
+const BASE = import.meta.env.BASE_URL
+
 const certs = [
   {
     id: 1,
@@ -15,8 +17,8 @@ const certs = [
       'Integration of LLMs and embedding models on Oracle Cloud Infrastructure',
       'Building RAG applications and agentic workflows'
     ],
-    link: '/certificates/OCI25GAIOCP.jpg',
-    img: '/certificates/OCI25GAIOCP.jpg'
+    link: `${BASE}certificates/OCI25GAIOCP.jpg`,
+    img: `${BASE}certificates/OCI25GAIOCP.jpg`
   },
   {
     id: 2,
@@ -29,8 +31,8 @@ const certs = [
       'Model training, evaluation, tracking, and deployment lifecycle',
       'Feature engineering, dataset preparation, and exploratory data analysis'
     ],
-    link: '/certificates/OCI25DSOCP.jpg',
-    img: '/certificates/OCI25DSOCP.jpg'
+    link: `${BASE}certificates/OCI25DSOCP.jpg`,
+    img: `${BASE}certificates/OCI25DSOCP.jpg`
   },
   {
     id: 3,
@@ -44,7 +46,7 @@ const certs = [
       'Practical implementations using TensorFlow and Keras frameworks'
     ],
     link: 'https://courses.cognitiveclass.ai/certificates/dbee03d82e95400c92d8add918a47296',
-    img: '/certificates/DeepLearningFundamentals.png'
+    img: `${BASE}certificates/DeepLearningFundamentals.png`
   },
   {
     id: 4,
@@ -58,7 +60,7 @@ const certs = [
       'Practical applications of productivity tools and modern AI assistants'
     ],
     link: 'https://www.linkedin.com/learning/certificates/d4fe28c061c5b2d3e68e4e5ec063e52e17c39077df6b3b239efce4c3b6e65c6f',
-    img: '/certificates/CareerEssentialsGenAI.png'
+    img: `${BASE}certificates/CareerEssentialsGenAI.png`
   },
   {
     id: 5,
@@ -72,7 +74,7 @@ const certs = [
       'Fine-tuning models on custom datasets and sharing on the Hub'
     ],
     link: '#',
-    img: '/certificates/LLMCourse.png'
+    img: `${BASE}certificates/LLMCourse.png`
   },
   {
     id: 6,
@@ -86,7 +88,7 @@ const certs = [
       'Evaluation of agent behaviors and performance on benchmark tasks'
     ],
     link: '#',
-    img: '/certificates/AIAgentsCourse.png'
+    img: `${BASE}certificates/AIAgentsCourse.png`
   }
 ]
 const belt = [...certs, ...certs, ...certs]

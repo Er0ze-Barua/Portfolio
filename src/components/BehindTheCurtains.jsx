@@ -244,7 +244,7 @@ export default function BehindTheCurtains() {
           <TiltCard className="w-full lg:w-96 rounded-2xl cursor-pointer flex-shrink-0 lg:ml-0">
             <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: '3 / 4', border: '1px solid rgba(148,163,184,0.12)', backgroundColor: 'rgba(17,16,16,0.8)' }}>
               <img 
-                src="/about-me.png" 
+                src={`${import.meta.env.BASE_URL}about-me.png`} 
                 alt="Eroze Barua" 
                 style={{ 
                   width: '100%', 

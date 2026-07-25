@@ -15,7 +15,7 @@ const MORE_LINKS = [
   { href: '#certificates', label: 'Certificates' },
 ]
 
-const RESUME_URL = '/resume.pdf'
+const RESUME_URL = `${import.meta.env.BASE_URL}resume.pdf`
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
