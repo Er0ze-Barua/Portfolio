@@ -25,7 +25,7 @@ function ExperienceCard({ entry, index, isActive }) {
         initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
         animate={visible ? { opacity: 1, x: 0 } : {}}
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-        className="w-full md:w-[45%]"
+        className="w-full lg:w-[45%]"
       >
         <motion.article
           animate={isActive
@@ -116,14 +116,14 @@ export default function Experience() {
           {/* Timeline line — silver tint */}
           <div
             ref={lineRef}
-            className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 md:block"
+            className="absolute left-1/2 top-0 hidden h-full -translate-x-1/2 lg:block"
             style={{ width: 1, backgroundColor: 'rgba(148,163,184,0.12)' }}
             aria-hidden="true"
           />
 
           {/* Glowing dot — stays orange, it's the focal point */}
           <motion.div
-            className="absolute left-1/2 z-20 hidden -translate-x-1/2 -translate-y-1/2 md:block"
+            className="absolute left-1/2 z-20 hidden -translate-x-1/2 -translate-y-1/2 lg:block"
             style={{ top: smoothDotY }}
           >
             <div className="h-3 w-3 rounded-full bg-[#b95221] shadow-[0_0_14px_5px_rgba(185,82,33,0.65)]" />

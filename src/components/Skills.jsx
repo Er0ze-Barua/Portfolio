@@ -17,8 +17,14 @@ function SkillCard({ cat, index, onClose, isMobile }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.65 }}
-      animate={{ opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 280, damping: 24, delay: index * 0.04 } }}
+      initial={{ opacity: 0, scale: 0.65, x: isMobile ? '-50%' : 0, y: isMobile ? '-50%' : 0 }}
+      animate={{ 
+        opacity: 1, 
+        scale: 1, 
+        x: isMobile ? '-50%' : 0, 
+        y: isMobile ? '-50%' : 0, 
+        transition: { type: 'spring', stiffness: 280, damping: 24, delay: index * 0.04 } 
+      }}
       exit={{ opacity: 0, scale: 0.65, transition: { duration: 0.15 } }}
       style={{
         position: 'fixed',
@@ -29,8 +35,10 @@ function SkillCard({ cat, index, onClose, isMobile }) {
         boxShadow: `0 0 32px 4px ${O}0.1)`,
         borderRadius: '16px',
         padding: '1.25rem',
+        maxHeight: isMobile ? '80vh' : 'auto',
+        overflowY: isMobile ? 'auto' : 'visible',
         ...(isMobile
-          ? { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
+          ? { top: '50%', left: '50%' }
           : cardOffsets[index]
         )
       }}

@@ -34,17 +34,17 @@ const certs = [
   },
   {
     id: 3,
-    name: 'IBM SkillsBuild Certificate',
-    issuer: 'IBM',
-    date: '2025',
-    initials: 'IB',
+    name: 'Deep Learning Fundamentals',
+    issuer: 'CognitiveClass.ai × IBM',
+    date: '2026',
+    initials: 'DL',
     points: [
-      'Skills build pathway on enterprise technologies and IT fundamentals',
-      'Hands-on projects and assessments verifying core technical capabilities',
-      'Understanding of modern software development and platform tools'
+      'Deep learning neural network architectures, forward/backpropagation',
+      'Model optimization using gradient descent, activation functions, and regularization',
+      'Practical implementations using TensorFlow and Keras frameworks'
     ],
-    link: '#',
-    img: null
+    link: 'https://courses.cognitiveclass.ai/certificates/dbee03d82e95400c92d8add918a47296',
+    img: '/certificates/DeepLearningFundamentals.png'
   },
   {
     id: 4,
@@ -57,14 +57,14 @@ const certs = [
       'Ethics and responsible AI implementation in enterprise settings',
       'Practical applications of productivity tools and modern AI assistants'
     ],
-    link: '/certificates/CertificateOfCompletion_Career Essentials in Generative AI by Microsoft and LinkedIn.pdf',
-    img: null
+    link: 'https://www.linkedin.com/learning/certificates/d4fe28c061c5b2d3e68e4e5ec063e52e17c39077df6b3b239efce4c3b6e65c6f',
+    img: '/certificates/CareerEssentialsGenAI.png'
   },
   {
     id: 5,
-    name: 'LLM Course - Chapter 1',
+    name: 'LLM Course',
     issuer: 'Hugging Face',
-    date: '2025',
+    date: '2026',
     initials: 'LLM',
     points: [
       'Introduction to large language models and the Hugging Face ecosystem',
@@ -72,13 +72,13 @@ const certs = [
       'Fine-tuning models on custom datasets and sharing on the Hub'
     ],
     link: '#',
-    img: null
+    img: '/certificates/LLMCourse.png'
   },
   {
     id: 6,
-    name: 'AI Agents Course - Unit 1',
+    name: 'AI Agents Course',
     issuer: 'Hugging Face',
-    date: '2025',
+    date: '2026',
     initials: 'AG',
     points: [
       'Foundations of AI Agents, decision-making loops, and environment interaction',
@@ -86,7 +86,7 @@ const certs = [
       'Evaluation of agent behaviors and performance on benchmark tasks'
     ],
     link: '#',
-    img: null
+    img: '/certificates/AIAgentsCourse.png'
   }
 ]
 const belt = [...certs, ...certs, ...certs]
@@ -99,16 +99,18 @@ const apparitionVariants = {
 
 function CertModal({ active, onClose }) {
   if (!active) return null
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+
   return createPortal(
     <AnimatePresence>
       <motion.div key="bd" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}
         onClick={onClose}
         style={{ position: 'fixed', inset: 0, zIndex: 9998, backgroundColor: 'rgba(8,8,8,0.85)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }} />
       <motion.div key={active.id} variants={apparitionVariants} initial="initial" animate="animate" exit="exit"
-        style={{ position: 'fixed', top: '50%', left: '50%', translate: '-50% -50%', zIndex: 9999, width: 'min(90vw, 640px)', backgroundColor: 'rgba(17,16,16,0.98)', border: '1px solid rgba(148,163,184,0.18)', boxShadow: '0 0 60px 8px rgba(185,82,33,0.12)', borderRadius: '20px', overflow: 'hidden', transformOrigin: 'center center' }}
+        style={{ position: 'fixed', top: '50%', left: '50%', translate: '-50% -50%', zIndex: 9999, width: 'min(90vw, 640px)', maxHeight: '90vh', overflowY: 'auto', backgroundColor: 'rgba(17,16,16,0.98)', border: '1px solid rgba(148,163,184,0.18)', boxShadow: '0 0 60px 8px rgba(185,82,33,0.12)', borderRadius: '20px', transformOrigin: 'center center' }}
       >
         {/* Image area */}
-        <div style={{ width: '100%', height: '200px', backgroundColor: 'rgba(148,163,184,0.04)', borderBottom: '1px solid rgba(148,163,184,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ width: '100%', height: isMobile ? '130px' : '200px', backgroundColor: 'rgba(148,163,184,0.04)', borderBottom: '1px solid rgba(148,163,184,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           {active.img ? (
             <img src={active.img} alt={active.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (

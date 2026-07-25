@@ -39,7 +39,8 @@ export default function App() {
           <img
             src="/portrait.png"
             style={{
-              width: '320px', height: '400px',
+              width: 'min(320px, 80vw)', height: 'auto',
+              aspectRatio: '320 / 400',
               objectFit: 'cover',
               filter: 'grayscale(1)',
               /* --- THE VISIBILITY BALANCING FIXES --- */

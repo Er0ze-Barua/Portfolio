@@ -25,16 +25,22 @@ function TiltCard({ children, className }) {
   const rotateX = useSpring(rawY, { stiffness: 200, damping: 20 })
   const rotateY = useSpring(rawX, { stiffness: 200, damping: 20 })
   
+  const [isTouch, setIsTouch] = useState(false)
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none)').matches)
+  }, [])
+
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={(e) => {
+        if (isTouch) return
         const rect = cardRef.current.getBoundingClientRect()
         rawX.set(((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 12)
         rawY.set(-((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * 12)
       }}
       onMouseLeave={() => { rawX.set(0); rawY.set(0) }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
+      style={isTouch ? { transformStyle: 'preserve-3d', perspective: 800 } : { rotateX, rotateY, transformStyle: 'preserve-3d', perspective: 800 }}
       className={className}
     >
       {children}
@@ -94,6 +100,37 @@ export default function BehindTheCurtains() {
   const [index, setIndex] = useState(0)
   const [dir, setDir] = useState(1)
   const [hovered, setHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const diff = touchStartX.current - touchEndX.current
+    if (diff > 50) {
+      go(1)
+    } else if (diff < -50) {
+      go(-1)
+    }
+    touchStartX.current = 0
+    touchEndX.current = 0
+  }
 
   // Global section progress (for entering/exiting the whole screen)
   const { scrollYProgress: sectionProgress } = useScroll({
@@ -127,10 +164,10 @@ export default function BehindTheCurtains() {
   const next = (index + 1) % cards.length
 
   useEffect(() => {
-    if (hovered) return
+    if (hovered || isMobile) return
     const timer = setInterval(() => go(1), 4000)
     return () => clearInterval(timer)
-  }, [hovered, index])
+  }, [hovered, index, isMobile])
 
   const scrollToBottomAndTrigger = (eventName) => {
     const isAtBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 20
@@ -207,7 +244,7 @@ export default function BehindTheCurtains() {
           <TiltCard className="w-full lg:w-96 rounded-2xl cursor-pointer flex-shrink-0 lg:ml-0">
             <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: '3 / 4', border: '1px solid rgba(148,163,184,0.12)', backgroundColor: 'rgba(17,16,16,0.8)' }}>
               <img 
-                src="/about-me.jpg" 
+                src="/about-me.png" 
                 alt="Eroze Barua" 
                 style={{ 
                   width: '100%', 
@@ -232,11 +269,14 @@ export default function BehindTheCurtains() {
               className="relative flex-shrink-0 w-full"
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              <GhostCard card={cards[prev]} dir={dir} side="left" />
-              <GhostCard card={cards[next]} dir={dir} side="right" />
+              {!isMobile && <GhostCard card={cards[prev]} dir={dir} side="left" />}
+              {!isMobile && <GhostCard card={cards[next]} dir={dir} side="right" />}
 
-              <div style={{ position: 'relative', borderRadius: '16px', border: '1px solid rgba(148,163,184,0.12)', backgroundColor: 'rgba(17,16,16,0.8)', overflow: 'hidden', aspectRatio: '4 / 3' }}>
+              <div style={{ position: 'relative', borderRadius: '16px', border: '1px solid rgba(148,163,184,0.12)', backgroundColor: 'rgba(17,16,16,0.8)', overflow: 'hidden', aspectRatio: isMobile ? 'auto' : '4 / 3', minHeight: isMobile ? '300px' : 'auto' }}>
                 
                 {/* Dots indicator at the bottom */}
                 <div style={{ position: 'absolute', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10, display: 'flex', gap: '0.5rem' }}>
@@ -248,7 +288,7 @@ export default function BehindTheCurtains() {
                   ))}
                 </div>
 
-                <div style={{ position: 'relative', height: '100%', padding: '3.5rem 3rem 3rem' }}>
+                <div style={{ position: 'relative', height: '100%', padding: isMobile ? '2rem 1.25rem 3.5rem' : '3.5rem 3rem 3rem' }}>
                   <AnimatePresence mode="wait" custom={dir}>
                     <motion.div key={index} custom={dir} variants={activeVariants} initial="enter" animate="center" exit="exit" style={{ width: '100%' }}>
                       <p style={{ marginBottom: '0.75rem', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.22em', color: '#b95221' }}>
@@ -257,7 +297,7 @@ export default function BehindTheCurtains() {
                       
                       {cards[index].id === 'get-in-touch' ? (
                         <div>
-                          <p style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(242,247,242,0.88)' }}>
+                          <p style={{ fontSize: isMobile ? '0.98rem' : '1.15rem', lineHeight: 1.65, color: 'rgba(242,247,242,0.88)' }}>
                             Let's connect - explore my{' '}
                             <a href="#contributions" onClick={(e) => { e.preventDefault(); handleProfilesScroll(); }} style={{ color: '#b95221', textDecoration: 'underline', cursor: 'pointer', fontWeight: 600 }}>repos and coding profiles</a>{' '}
                             below, or grab my{' '}
@@ -289,7 +329,7 @@ export default function BehindTheCurtains() {
                           </div>
                         </div>
                       ) : (
-                        <p style={{ fontSize: '1.15rem', lineHeight: 1.65, color: 'rgba(242,247,242,0.88)' }}>
+                        <p style={{ fontSize: isMobile ? '0.98rem' : '1.15rem', lineHeight: 1.65, color: 'rgba(242,247,242,0.88)' }}>
                           {cards[index].body}
                         </p>
                       )}

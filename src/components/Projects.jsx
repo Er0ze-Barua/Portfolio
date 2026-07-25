@@ -69,17 +69,50 @@ function LiquidDots({ images, cur, setCur, paused, setPaused }) {
 function ImageCarousel({ images, index: projectIndex }) {
   const [cur, setCur] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
   useEffect(() => {
-    if (paused) return
+    const handleResize = () => setIsMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    if (paused || isMobile) return
     const t = setInterval(() => setCur(i => (i + 1) % images.length), 2500)
     return () => clearInterval(t)
-  }, [images.length, paused])
+  }, [images.length, paused, isMobile])
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const diff = touchStartX.current - touchEndX.current
+    if (diff > 50) {
+      setCur(i => (i + 1) % images.length)
+    } else if (diff < -50) {
+      setCur(i => (i - 1 + images.length) % images.length)
+    }
+    touchStartX.current = 0
+    touchEndX.current = 0
+  }
 
   return (
     <div 
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{ width: '100%', position: 'relative', aspectRatio: '16/9' }}
     >
       {/* Inner wrapper to handle clipping for rounding */}

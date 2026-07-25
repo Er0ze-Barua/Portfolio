@@ -51,7 +51,7 @@ export default function Hero({ splashDone = false }) {
             </motion.p>
             
             {/* Line 2: Main Display Name */}
-            <motion.h1 variants={itemVariants} className="font-display font-bold leading-[0.92] tracking-tight" style={{ fontSize: 'clamp(5rem,12vw,10rem)', color: '#f2f7f2' }}>
+            <motion.h1 variants={itemVariants} className="font-display font-bold leading-[0.92] tracking-tight" style={{ fontSize: 'clamp(3.5rem, 12vw, 8rem)', color: '#f2f7f2' }}>
               {personal.firstName}
             </motion.h1>
             

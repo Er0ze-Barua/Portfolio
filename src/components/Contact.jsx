@@ -18,12 +18,22 @@ const SOCIALS = [
 function QuotesCard() {
   const [idx, setIdx] = useState(0)
   const [hovered, setHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     if (hovered) return
     const t = setInterval(() => setIdx(i => (i + 1) % QUOTES.length), 3000)
     return () => clearInterval(t)
   }, [hovered])
+
+  const showControls = hovered || isMobile
 
   return (
     <motion.div 
@@ -47,11 +57,11 @@ function QuotesCard() {
       <div style={{ marginTop: '1.5rem' }}>
         <motion.div
           animate={{ 
-            gap: hovered ? '2px' : '0px', 
-            padding: hovered ? '4px 10px' : '2px 4px', 
-            backgroundColor: hovered ? 'rgba(185,82,33,0.08)' : 'rgba(255,255,255,0.0)', 
+            gap: showControls ? '2px' : '0px', 
+            padding: showControls ? '4px 10px' : '2px 4px', 
+            backgroundColor: showControls ? 'rgba(185,82,33,0.08)' : 'rgba(255,255,255,0.0)', 
             borderRadius: 99, 
-            border: hovered ? '1px solid rgba(185,82,33,0.25)' : '1px solid rgba(255,255,255,0.0)' 
+            border: showControls ? '1px solid rgba(185,82,33,0.25)' : '1px solid rgba(255,255,255,0.0)' 
           }}
           transition={{ type: 'spring', stiffness: 300, damping: 24 }}
           style={{ display: 'flex', alignItems: 'center' }}
@@ -62,11 +72,11 @@ function QuotesCard() {
             >
               <motion.span
                 animate={{ 
-                  width: hovered ? 7 : (i === idx ? 12 : 5), 
-                  height: hovered ? 7 : 5, 
+                  width: showControls ? 7 : (i === idx ? 12 : 5), 
+                  height: showControls ? 7 : 5, 
                   borderRadius: 99, 
-                  backgroundColor: i === idx ? '#b95221' : (hovered ? 'rgba(148,163,184,0.6)' : 'rgba(148,163,184,0.25)'),
-                  scale: hovered && i === idx ? 1.2 : 1,
+                  backgroundColor: i === idx ? '#b95221' : (showControls ? 'rgba(148,163,184,0.6)' : 'rgba(148,163,184,0.25)'),
+                  scale: showControls && i === idx ? 1.2 : 1,
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                 style={{ display: 'block', borderRadius: 99 }}
@@ -125,16 +135,43 @@ function ConnectCard() {
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} style={{ overflow: 'hidden', width: '100%' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               {SOCIALS.map((s, i) => (
-                <motion.a key={s.label} href={s.href}
-                  target="_blank" rel="noopener noreferrer"
-                  initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
-                  whileHover={{ y: -1 }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 0.9rem', borderRadius: 12, border: '1px solid rgba(148,163,184,0.18)', backgroundColor: 'rgba(148,163,184,0.04)', color: '#94a3b8', textDecoration: 'none', fontSize: '0.78rem', transition: 'all 0.18s' }}
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#f2f7f2'; e.currentTarget.style.borderColor = '#f2f7f2'; e.currentTarget.style.color = '#080808' }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(148,163,184,0.04)'; e.currentTarget.style.borderColor = 'rgba(148,163,184,0.18)'; e.currentTarget.style.color = '#94a3b8' }}
-                >
-                  <span style={{ flexShrink: 0 }}>{s.icon}</span>{s.label}
-                </motion.a>
+                <div key={s.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', width: '100%' }}>
+                  <motion.a href={s.href}
+                    target="_blank" rel="noopener noreferrer"
+                    initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }}
+                    whileHover={{ y: -1 }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 0.9rem', borderRadius: 12, border: '1px solid rgba(148,163,184,0.18)', backgroundColor: 'rgba(148,163,184,0.04)', color: '#94a3b8', textDecoration: 'none', fontSize: '0.78rem', transition: 'all 0.18s' }}
+                    onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#f2f7f2'; e.currentTarget.style.borderColor = '#f2f7f2'; e.currentTarget.style.color = '#080808' }}
+                    onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(148,163,184,0.04)'; e.currentTarget.style.borderColor = 'rgba(148,163,184,0.18)'; e.currentTarget.style.color = '#94a3b8' }}
+                  >
+                    <span style={{ flexShrink: 0 }}>{s.icon}</span>{s.label}
+                  </motion.a>
+                  {s.label === 'beroze182@gmail.com' && (
+                    <motion.a 
+                      href="mailto:beroze182@gmail.com?subject=Landed%20right%20from%20your%20portfolio&body=Hey%20Eroze%2C%0A%0AJust%20came%20across%20your%20portfolio%20and%20"
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.07 + 0.1 }}
+                      style={{ 
+                        display: 'block', 
+                        fontSize: '0.66rem', 
+                        color: '#b95221', 
+                        textDecoration: 'none', 
+                        textAlign: 'center', 
+                        marginTop: '0.5rem', 
+                        cursor: 'pointer',
+                        transition: 'color 0.2s',
+                        letterSpacing: '0.01em',
+                        fontFamily: 'inherit',
+                        fontWeight: 500,
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.color = '#d26027' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '#b95221' }}
+                    >
+                      Not using Gmail? Or not logged in? Click here
+                    </motion.a>
+                  )}
+                </div>
               ))}
             </div>
           </motion.div>
@@ -186,7 +223,7 @@ export default function Contact() {
     <section id="contact" className="py-24 lg:py-32">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader eyebrow="Contact" title="Say hello" subtitle="Let's build something worth talking about." />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.25rem', marginTop: '3rem', alignItems: 'start' }}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-12 items-start">
           <QuotesCard />
           <ConnectCard />
           <SpotifyCard />
